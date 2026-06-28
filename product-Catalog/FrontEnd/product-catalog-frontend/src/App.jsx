@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [search ,setSearch]=useState("");
 
   useEffect(() => {
     fetch("http://localhost:8080/api/products")
@@ -9,16 +10,28 @@ function App() {
       .then((data) => setProducts(data))
       .catch((error) => console.error(error));
   }, []);
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div className="min-h-screen bg-olive-200 p-8">
       <h1 className="text-3xl font-bold text-center mb-8">
         Product Catalog
       </h1>
+       <div className="flex justify-center mb-6">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full max-w-md px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
 
       {products.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <div
               key={product.id}
               className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition duration-300"
