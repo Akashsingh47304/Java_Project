@@ -1,6 +1,7 @@
 package com.ecom.product_Catalog.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,12 +17,7 @@ public class Category {
     @Column(nullable = false)
     private String name;
 
-
-    @OneToMany(
-            mappedBy = "category",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore   // 👈 IMPORTANT (break recursion)
     private List<Product> products;
-
-}
+    }
