@@ -22,7 +22,7 @@ public class ProductController {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
-    @GetMapping("/catgory/{categoryId}")
+    @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<Product>> findBycategoryId(@PathVariable Long categoryId){
         return ResponseEntity.ok(productService.findByCategoryId(categoryId));
     }
