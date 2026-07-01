@@ -26,7 +26,10 @@ public class AuthController {
 
             AuthResponse response = authService.register(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
-
-
+    }
+    @GetMapping("/verify-email")
+    public ResponseEntity<?> verifyEmail(@RequestParam String token){
+        authService.verifyEmail(token);
+        return ResponseEntity.status(HttpStatus.FOUND).body(Map.of("message","email verified successfully"));
     }
 }
